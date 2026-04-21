@@ -19,8 +19,9 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
+#ifndef _HAS_STD_BYTE
 #define _HAS_STD_BYTE 0
-#include "../../SDL_internal.h"
+#endif
 
 #ifndef SDL_config_winrt_h_
 #define SDL_config_winrt_h_
