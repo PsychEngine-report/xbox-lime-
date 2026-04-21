@@ -27,25 +27,25 @@ jobs:
         run: echo "HXCPP_COMPILE_CACHE=~/.hxcpp" >> $GITHUB_ENV
       - name: Configure Lime
         run: haxelib dev lime ${{ github.workspace }}
-      - name: Rebuild Lime
-        run: |
-          haxelib run lime rebuild uwp -32 -release -nocolor -nocffi
-          haxelib run lime rebuild uwp -64 -release -nocolor -nocffi
-      
+        
+      - name: Rebuild Lime (x86)
+        run: haxelib run lime rebuild uwp -32 -release -nocolor -nocffi
+        shell: cmd
+
       - name: Upload Artifact (UWP x86)
         uses: actions/upload-artifact@v4
         with:
           name: WinRT-NDLL
-          path: |
-            ndll/WinRT/
-            !**/.gitignore
-          if-no-files-found: warn
+          path: ndll/WinRT/   # This is where Lime puts -32 builds
+          if-no-files-found: error
+
+      - name: Rebuild Lime (x64)
+        run: haxelib run lime rebuild uwp -64 -release -nocolor -nocffi
+        shell: cmd
 
       - name: Upload Artifact (UWP x64)
         uses: actions/upload-artifact@v4
         with:
           name: WinRT64-NDLL
-          path: |
-            ndll/WinRT64/
-            !**/.gitignore
-          if-no-files-found: warn
+          path: ndll/WinRT64/ # This is where Lime puts -64 builds
+          if-no-files-found: error
