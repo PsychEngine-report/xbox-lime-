@@ -1,5 +1,5 @@
 package lime._internal.backend.html5;
-
+#if (!uwp && !winrt)
 import js.html.webgl.RenderingContext in WebGLRenderingContext;
 import lime.graphics.opengl.*;
 import lime.utils.ArrayBuffer;
@@ -787,3 +787,4 @@ extern class HTML5WebGL2RenderContext extends WebGLRenderingContext
 	public function vertexAttribIPointer(index:Int, size:Int, type:Int, stride:Int, offset:DataPointer):Void;
 	public function waitSync(sync:GLSync, flags:Int, timeout:Dynamic /*int64*/):Void;
 }
+#end
