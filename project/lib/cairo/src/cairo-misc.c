@@ -792,19 +792,27 @@ cairo_get_locale_decimal_point (void)
 #include <windows.h>
 #include <io.h>
 
+#ifdef _WIN32
+
+#define WIN32_LEAN_AND_MEAN
+/* We require Windows 2000 features such as ETO_PDY */
+#if !defined(WINVER) || (WINVER < 0x0500)
+# define WINVER 0x0500
+#endif
+#if !defined(_WIN32_WINNT) || (_WIN32_WINNT < 0x0500)
+# define _WIN32_WINNT 0x0500
+#endif
+
+#include <windows.h>
+#include <io.h>
+
 #if !_WIN32_WCE
-/* tmpfile() replacement for Windows.
- *
- * On Windows tmpfile() creates the file in the root directory. This
- * may fail due to unsufficient privileges. However, this isn't a
- * problem on Windows CE so we don't use it there.
- */
+/* tmpfile() replacement for Windows. */
 FILE *
 _cairo_win32_tmpfile (void)
 {
 #if defined(HX_WINRT)
-    /* UWP / Xbox does not allow the use of CreateFileW or GetTempPathW in this way.
-       Returning NULL forces Cairo to use an alternative or fail gracefully. */
+    /* UWP/Xbox doesn't allow CreateFileW; returning NULL forces memory fallback */
     return NULL;
 #else
     DWORD path_len;
@@ -816,38 +824,39 @@ _cairo_win32_tmpfile (void)
 
     path_len = GetTempPathW (MAX_PATH, path_name);
     if (path_len <= 0 || path_len >= MAX_PATH)
-	return NULL;
+        return NULL;
 
     if (GetTempFileNameW (path_name, L"ps_", 0, file_name) == 0)
-	return NULL;
+        return NULL;
 
     handle = CreateFileW (file_name,
-			 GENERIC_READ | GENERIC_WRITE,
-			 0,
-			 NULL,
-			 CREATE_ALWAYS,
-			 FILE_ATTRIBUTE_NORMAL | FILE_FLAG_DELETE_ON_CLOSE,
-			 NULL);
+             GENERIC_READ | GENERIC_WRITE,
+             0,
+             NULL,
+             CREATE_ALWAYS,
+             FILE_ATTRIBUTE_NORMAL | FILE_FLAG_DELETE_ON_CLOSE,
+             NULL);
     if (handle == INVALID_HANDLE_VALUE) {
-	DeleteFileW (file_name);
-	return NULL;
+        DeleteFileW (file_name);
+        return NULL;
     }
 
     fd = _open_osfhandle((intptr_t) handle, 0);
     if (fd < 0) {
-	CloseHandle (handle);
-	return NULL;
+        CloseHandle (handle);
+        return NULL;
     }
 
     fp = fdopen(fd, "w+b");
     if (fp == NULL) {
-	_close(fd);
-	return NULL;
+        _close(fd);
+        return NULL;
     }
 
     return fp;
-#endif
+#endif /* HX_WINRT */
 }
+#endif /* !_WIN32_WCE */
 
 #endif /* _WIN32 */
 
