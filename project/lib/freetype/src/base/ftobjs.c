@@ -747,8 +747,8 @@
             prev->next = cur->next;
 
           /* finalize client-specific data */
-          if ( slot->generic.finalizer )
-            slot->generic.finalizer( slot );
+          if ( slot->ft_generic_ptr.finalizer )
+            slot->ft_generic_ptr.finalizer( slot );
 
           ft_glyphslot_done( slot );
           FT_FREE( slot );
@@ -1242,8 +1242,8 @@
                 FT_Driver  driver )
   {
     /* finalize client-specific data */
-    if ( size->generic.finalizer )
-      size->generic.finalizer( size );
+    if ( size->ft_generic_ptr.finalizer )
+      size->ft_generic_ptr.finalizer( size );
 
     /* finalize format-specific stuff */
     if ( driver->clazz->done_size )
@@ -1309,8 +1309,8 @@
     face->size = NULL;
 
     /* now discard client data */
-    if ( face->generic.finalizer )
-      face->generic.finalizer( face );
+    if ( face->ft_generic_ptr.finalizer )
+      face->ft_generic_ptr.finalizer( face );
 
     /* discard charmaps */
     destroy_charmaps( face, memory );
