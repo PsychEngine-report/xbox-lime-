@@ -560,7 +560,7 @@ hb_ft_face_create_referenced (FT_Face ft_face)
 static void
 hb_ft_face_finalize (FT_Face ft_face)
 {
-  hb_face_destroy ((hb_face_t *) ft_face->generic.data);
+  hb_face_destroy ((hb_face_t *) ft_face->ft_generic_ptr.data);
 }
 
 /**
@@ -575,16 +575,16 @@ hb_ft_face_finalize (FT_Face ft_face)
 hb_face_t *
 hb_ft_face_create_cached (FT_Face ft_face)
 {
-  if (unlikely (!ft_face->generic.data || ft_face->generic.finalizer != (FT_Generic_Finalizer) hb_ft_face_finalize))
+  if (unlikely (!ft_face->ft_generic_ptr.data || ft_face->ft_generic_ptr.finalizer != (FT_Generic_Finalizer) hb_ft_face_finalize))
   {
-    if (ft_face->generic.finalizer)
-      ft_face->generic.finalizer (ft_face);
+    if (ft_face->ft_generic_ptr.finalizer)
+      ft_face->ft_generic_ptr.finalizer (ft_face);
 
-    ft_face->generic.data = hb_ft_face_create (ft_face, nullptr);
-    ft_face->generic.finalizer = (FT_Generic_Finalizer) hb_ft_face_finalize;
+    ft_face->ft_generic_ptr.data = hb_ft_face_create (ft_face, nullptr);
+    ft_face->ft_generic_ptr.finalizer = (FT_Generic_Finalizer) hb_ft_face_finalize;
   }
 
-  return hb_face_reference ((hb_face_t *) ft_face->generic.data);
+  return hb_face_reference ((hb_face_t *) ft_face->ft_generic_ptr.data);
 }
 
 
@@ -727,7 +727,7 @@ get_ft_library (void)
 static void
 _release_blob (FT_Face ft_face)
 {
-  hb_blob_destroy ((hb_blob_t *) ft_face->generic.data);
+  hb_blob_destroy ((hb_blob_t *) ft_face->ft_generic_ptr.data);
 }
 
 void
@@ -785,8 +785,8 @@ hb_ft_font_set_funcs (hb_font_t *font)
   }
 #endif
 
-  ft_face->generic.data = blob;
-  ft_face->generic.finalizer = (FT_Generic_Finalizer) _release_blob;
+  ft_face->ft_generic_ptr.data = blob;
+  ft_face->ft_generic_ptr.finalizer = (FT_Generic_Finalizer) _release_blob;
 
   _hb_ft_font_set_funcs (font, ft_face, true);
   hb_ft_font_set_load_flags (font, FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING);
