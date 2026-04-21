@@ -14,7 +14,9 @@
  * understand and accept it fully.
  *
  */
-
+#ifdef HX_WINRT
+#define generic generic_ptr
+#endif
 
 #ifndef FREETYPE_H_
 #define FREETYPE_H_
