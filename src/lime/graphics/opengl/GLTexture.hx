@@ -12,7 +12,7 @@ abstract GLTexture(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(TEXTURE, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 typedef GLTexture = js.html.webgl.Texture;
 #else
 typedef GLTexture = Dynamic;
