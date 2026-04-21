@@ -802,6 +802,11 @@ cairo_get_locale_decimal_point (void)
 FILE *
 _cairo_win32_tmpfile (void)
 {
+#if defined(HX_WINRT)
+    /* UWP / Xbox does not allow the use of CreateFileW or GetTempPathW in this way.
+       Returning NULL forces Cairo to use an alternative or fail gracefully. */
+    return NULL;
+#else
     DWORD path_len;
     WCHAR path_name[MAX_PATH + 1];
     WCHAR file_name[MAX_PATH + 1];
@@ -841,8 +846,7 @@ _cairo_win32_tmpfile (void)
     }
 
     return fp;
-}
-#endif /* !_WIN32_WCE */
+#endif
 
 #endif /* _WIN32 */
 
