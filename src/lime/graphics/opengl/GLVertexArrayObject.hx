@@ -12,7 +12,7 @@ abstract GLVertexArrayObject(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(VERTEX_ARRAY_OBJECT, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 @:native("WebGLVertexArrayObject")
 extern class GLVertexArrayObject {}
 #else

@@ -7,7 +7,7 @@ import lime.system.CFFIPointer;
 
 @:access(lime._internal.backend.native.NativeCFFI)
 abstract GLSync(CFFIPointer) from CFFIPointer to CFFIPointer {}
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 @:native("WebGLSync")
 extern class GLSync {}
 #else

@@ -12,7 +12,7 @@ abstract GLTransformFeedback(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(TRANSFORM_FEEDBACK, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 @:native("WebGLTransformFeedback")
 extern class GLTransformFeedback {}
 #else

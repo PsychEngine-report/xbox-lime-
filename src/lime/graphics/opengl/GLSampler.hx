@@ -12,7 +12,7 @@ abstract GLSampler(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(SAMPLER, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 @:native("WebGLSampler")
 extern class GLSampler {}
 #else

@@ -12,7 +12,7 @@ abstract GLQuery(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(QUERY, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 @:native("WebGLQuery")
 extern class GLQuery {}
 #else

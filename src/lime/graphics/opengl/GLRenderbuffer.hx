@@ -12,7 +12,7 @@ abstract GLRenderbuffer(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(RENDERBUFFER, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 typedef GLRenderbuffer = js.html.webgl.Renderbuffer;
 #else
 typedef GLRenderbuffer = Dynamic;
