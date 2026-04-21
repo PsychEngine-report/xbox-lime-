@@ -847,6 +847,7 @@ _cairo_win32_tmpfile (void)
 
     return fp;
 #endif
+}
 
 #endif /* _WIN32 */
 
