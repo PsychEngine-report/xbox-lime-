@@ -7,7 +7,7 @@ env:
   HAXE_VERSION: 4.3.7
 
 jobs:
-  windows:
+  xbox:
     runs-on: windows-2025
     steps:
       - name: Checkout
