@@ -137,9 +137,18 @@ class WindowsPlatform extends PlatformTarget
 			project.architectures.remove(excludeArchitecture);
 		}
 
-		if (project.targetFlags.exists("uwp") || project.targetFlags.exists("winjs"))
+		if (project.targetFlags.exists("uwp"))
 		{
-			targetType = "winjs";
+    	// If we have 'native' or 'cpp' flags, don't use winjs!
+    	if (project.defines.exists("native") || project.defines.exists("cpp")) {
+        	targetType = "winrt"; // 'winrt' is the C++ path for UWP in this file
+    	} else {
+        		targetType = "winjs";
+    		   }
+		}
+		else if (project.targetFlags.exists("winjs"))
+		{
+    		targetType = "winjs";
 		}
 		else if (project.targetFlags.exists("neko"))
 		{
