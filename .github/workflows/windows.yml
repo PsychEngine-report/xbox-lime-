@@ -32,6 +32,8 @@ jobs:
           haxelib run lime rebuild windows -32 -release -nocolor -nocffi
           haxelib run lime rebuild windows -64 -release -nocolor -nocffi
           haxelib run lime rebuild windows -arm64 -release -nocolor -nocffi -D HXCPP_ARM64
+          haxelib run lime rebuild uwp -32 -release -nocolor -nocffi
+          haxelib run lime rebuild uwp -64 -release -nocolor -nocffi
       - name: Upload Artifact (x86)
         uses: actions/upload-artifact@v4
         with:
@@ -59,3 +61,20 @@ jobs:
             !**/.gitignore
             lime.png
           if-no-files-found: error
+      - name: Upload Artifact (UWP x86)
+        uses: actions/upload-artifact@v4
+        with:
+          name: WinRT-NDLL
+          path: |
+            ndll/WinRT/
+            !**/.gitignore
+          if-no-files-found: warn
+
+      - name: Upload Artifact (UWP x64)
+        uses: actions/upload-artifact@v4
+        with:
+          name: WinRT64-NDLL
+          path: |
+            ndll/WinRT64/
+            !**/.gitignore
+          if-no-files-found: warn
