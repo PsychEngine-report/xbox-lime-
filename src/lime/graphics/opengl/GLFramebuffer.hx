@@ -12,7 +12,7 @@ abstract GLFramebuffer(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(FRAMEBUFFER, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 typedef GLFramebuffer = js.html.webgl.Framebuffer;
 #else
 typedef GLFramebuffer = Dynamic;
