@@ -10,15 +10,15 @@ jobs:
     uses: ./.github/workflows/linux.yml
   mac:
     uses: ./.github/workflows/mac.yml
-  windows:
-    uses: ./.github/workflows/windows.yml
+ # windows:
+   # uses: ./.github/workflows/windows.yml
   xbox:
     uses: ./.github/workflows/xbox.yml
   miscellaneous:
     uses: ./.github/workflows/miscellaneous.yml
 
   publisher:
-    needs: [android, ios, linux, mac, windows, xbox, miscellaneous]
+    needs: [android, ios, linux, mac, xbox, miscellaneous] #, windows]
     runs-on: ubuntu-latest
     permissions:
       contents: write
