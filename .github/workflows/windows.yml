@@ -1,4 +1,4 @@
-name: Windows CI
+name: Xbox CI
 on:
   workflow_dispatch:
   workflow_call:
@@ -29,8 +29,8 @@ jobs:
         run: haxelib dev lime ${{ github.workspace }}
       - name: Rebuild Lime
         run: |
-          haxelib run lime rebuild uwp -32 -release -nocolor -nocffi -Dextra_cflags="-Dgeneric=ft_generic"
-          haxelib run lime rebuild uwp -64 -release -nocolor -nocffi -Dextra_cflags="-Dgeneric=ft_generic"
+          haxelib run lime rebuild uwp -32 -release -nocolor -nocffi
+          haxelib run lime rebuild uwp -64 -release -nocolor -nocffi
       
       - name: Upload Artifact (UWP x86)
         uses: actions/upload-artifact@v4
