@@ -12,7 +12,7 @@ abstract GLBuffer(GLObject) from GLObject to GLObject
 		return GLObject.fromInt(BUFFER, id);
 	}
 }
-#elseif (lime_webgl && !doc_gen)
+#elseif (lime_webgl && !uwp && !winrt && !doc_gen)
 typedef GLBuffer = js.html.webgl.Buffer;
 #else
 typedef GLBuffer = Dynamic;
