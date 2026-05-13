@@ -36,7 +36,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: WinRT-NDLL
-          path: ndll/WinRT/   # This is where Lime puts -32 builds
+          path: |
+              ndll/WinRT/
+              !**/.gitignore
+              lime.png
           if-no-files-found: error
 
       - name: Rebuild Lime (x64)
@@ -47,5 +50,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: WinRT64-NDLL
-          path: ndll/WinRT64/ # This is where Lime puts -64 builds
+          path: |
+              ndll/WinRT64/
+              !**/.gitignore
+              lime.png
           if-no-files-found: error
